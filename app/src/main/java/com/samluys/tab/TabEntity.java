@@ -9,6 +9,7 @@ public class TabEntity implements QFTabEntity {
     public int unSelectedIcon;
     public int tabCoverIcon;
     public boolean isPublish;
+    public boolean isNewPage;
 
     public TabEntity(String title, int selectedIcon, int unSelectedIcon) {
         this.title = title;
@@ -29,6 +30,15 @@ public class TabEntity implements QFTabEntity {
         this.unSelectedIcon = unSelectedIcon;
         this.tabCoverIcon = tabCoverIcon;
         this.isPublish = isPublish;
+    }
+
+    public TabEntity(String title, int selectedIcon, int unSelectedIcon, int tabCoverIcon, boolean isPublish, boolean isNewPage) {
+        this.title = title;
+        this.selectedIcon = selectedIcon;
+        this.unSelectedIcon = unSelectedIcon;
+        this.tabCoverIcon = tabCoverIcon;
+        this.isPublish = isPublish;
+        this.isNewPage = isNewPage;
     }
 
     public TabEntity(String title) {
@@ -58,6 +68,11 @@ public class TabEntity implements QFTabEntity {
     @Override
     public boolean getIsPublish() {
         return isPublish;
+    }
+
+    @Override
+    public boolean getIsNewPage() {
+        return isNewPage;
     }
 
 

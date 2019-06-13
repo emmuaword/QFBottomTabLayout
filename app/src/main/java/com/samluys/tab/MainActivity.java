@@ -92,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onNewPage(int position) {
+
+            }
+
+            @Override
             public void onDoubleClick(int position) {
                 Toast.makeText(MainActivity.this, "双击了" + position, Toast.LENGTH_LONG).show();
             }
@@ -147,6 +152,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabPublish(int position) {
 
                 Toast.makeText(MainActivity.this, "点击了中间的发布按钮， 位置：" + position, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNewPage(int position) {
+                Toast.makeText(MainActivity.this, "newPage", Toast.LENGTH_SHORT).show();
             }
 
             @Override

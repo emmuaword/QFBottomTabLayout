@@ -221,6 +221,12 @@ public class QFBottomTabLayout extends FrameLayout {
                     }
                     return;
                 }
+                if (entity.getIsNewPage()) {
+                    if (mListener != null) {
+                        mListener.onNewPage(position);
+                    }
+                    return;
+                }
 
                 // 点击了覆盖图片的情况
                 if (publish.getVisibility() == VISIBLE) {
@@ -405,7 +411,7 @@ public class QFBottomTabLayout extends FrameLayout {
     public int getFragmentIndex(int tabIndex) {
         int tempCurrenTab = tabIndex;
         for (int i = 0; i < tabIndex; i++) {
-            if (mTabEntitys.get(i).getIsPublish()) {
+            if (mTabEntitys.get(i).getIsPublish()||mTabEntitys.get(i).getIsNewPage()) {
                 tempCurrenTab--;
             }
         }

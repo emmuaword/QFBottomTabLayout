@@ -7,6 +7,8 @@ public interface OnTabSelectListener {
 
     void onTabPublish(int position);
 
+    void onNewPage(int position);
+
     void onDoubleClick(int position);
 
     boolean shouldInterceptJumpFragment(int position);

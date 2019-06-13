@@ -76,6 +76,11 @@ public class TestFragmentActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onNewPage(int position) {
+
+            }
+
+            @Override
             public void onDoubleClick(int position) {
 
             }

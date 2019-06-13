@@ -16,4 +16,6 @@ public interface QFTabEntity {
     int getTabCoverIcon();
 
     boolean getIsPublish();
+
+    boolean getIsNewPage();
 }
