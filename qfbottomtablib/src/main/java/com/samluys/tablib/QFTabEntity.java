@@ -1,7 +1,7 @@
 package com.samluys.tablib;
 
 
-import androidx.annotation.DrawableRes;
+import android.support.annotation.DrawableRes;
 
 public interface QFTabEntity {
     String getTabTitle();
@@ -14,4 +14,6 @@ public interface QFTabEntity {
 
     @DrawableRes
     int getTabCoverIcon();
+
+    boolean getIsPublish();
 }

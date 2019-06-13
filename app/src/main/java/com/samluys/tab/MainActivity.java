@@ -1,9 +1,9 @@
 package com.samluys.tab;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -100,24 +100,29 @@ public class MainActivity extends AppCompatActivity {
         // 自定义导航栏TAB数量 最少2个最多6个
         ArrayList<QFTabEntity> list3 = new ArrayList<>();
         for (int i = 0; i < mTitles.length - 1; i++) {
-            list3.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
+            if (i == 2) {
+                list3.add(new TabEntity("", R.mipmap.icon_center_publish, R.mipmap.icon_center_publish, 0, true));
+            } else {
+                list3.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
+            }
+
         }
         mTanLayout_3.setTabData(list3);
         mTanLayout_3.showDot(3);
 
         // 纯文字
         mTanLayout_4.setTabData(mTabEntities);
-        mTanLayout_4.showMsg(3,99);
-        mTanLayout_4.showMsg(4,9);
-        mTanLayout_4.showMsg(0,999);
+        mTanLayout_4.showMsg(3, 99);
+        mTanLayout_4.showMsg(4, 9);
+        mTanLayout_4.showMsg(0, 999);
         mTanLayout_4.showDot(2);
         mTanLayout_4.showDot(1);
 
         // 纯图片
         mTanLayout_5.setTabData(mTabEntities);
-        mTanLayout_5.showMsg(3,9);
-        mTanLayout_5.showMsg(1,99);
-        mTanLayout_5.showMsg(4,999);
+        mTanLayout_5.showMsg(3, 9);
+        mTanLayout_5.showMsg(1, 99);
+        mTanLayout_5.showMsg(4, 999);
         mTanLayout_5.showDot(2);
 
         // 自定义发布在中间
@@ -158,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
                 0, 0,
                 R.mipmap.tab3, 0, 0};
         int[] mIconSelectIds = {
-                0,0,
-                R.mipmap.tab3_selected, 0,0};
+                0, 0,
+                R.mipmap.tab3_selected, 0, 0};
 
         String[] mTitles = {"首页", "社区", "", "消息", "发现"};
         ArrayList<QFTabEntity> list8 = new ArrayList<>();

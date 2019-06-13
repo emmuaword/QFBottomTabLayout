@@ -166,10 +166,8 @@
                 app:qf_textSelectColor="#2C97DE"
                 app:qf_textUnselectColor="#66000000"
                 app:qf_background="@color/color_fafafa"
-                app:qf_publishMode="CENTER"
                 app:qf_iconVisible="false"
-                app:qf_textsize="18sp"
-                app:qf_centerPublishIcon="@mipmap/icon_center_publish"/>
+                app:qf_textsize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -7,6 +7,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -21,11 +26,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import androidx.annotation.ColorInt;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 /**
  * @author luys
@@ -47,7 +47,9 @@ public class QFBottomTabLayout extends FrameLayout {
     private float mTabWidth;
     private int mBackgroundColor;
 
-    /** title */
+    /**
+     * title
+     */
     private static final int TEXT_BOLD_NONE = 0;
     private static final int TEXT_BOLD_WHEN_SELECT = 1;
     private static final int TEXT_BOLD_BOTH = 2;
@@ -58,14 +60,15 @@ public class QFBottomTabLayout extends FrameLayout {
     private boolean mTextAllCaps;
     private boolean mtextVisible;
 
-    /** icon */
+    /**
+     * icon
+     */
     private boolean mIconVisible;
     private float mIconWidth;
     private float mIconHeight;
     private float mIconMargin;
     private int mHeight;
     private FragmentChangeManager mFragmentChangeManager;
-    private int mPublishMode;
     private int mCenterPublishIcon;
     private long firstTab = 0;
     private long secondTab = 0;
@@ -127,7 +130,6 @@ public class QFBottomTabLayout extends FrameLayout {
         mTabWidth = ta.getDimension(R.styleable.QFBottomTabLayout_qf_tab_width, dp2px(-1));
         mTabPadding = ta.getDimension(R.styleable.QFBottomTabLayout_qf_tab_padding, mTabSpaceEqual || mTabWidth > 0 ? dp2px(0) : dp2px(10));
         mBackgroundColor = ta.getColor(R.styleable.QFBottomTabLayout_qf_background, Color.parseColor("#fafafa"));
-        mPublishMode = ta.getInt(R.styleable.QFBottomTabLayout_qf_publishMode, 0);
         mtextVisible = ta.getBoolean(R.styleable.QFBottomTabLayout_qf_textVisible, true);
         mCenterPublishIcon = ta.getResourceId(R.styleable.QFBottomTabLayout_qf_centerPublishIcon, R.mipmap.icon_center_publish);
         mThemeColor = ta.getColor(R.styleable.QFBottomTabLayout_qf_themeColor, 0);
@@ -138,38 +140,11 @@ public class QFBottomTabLayout extends FrameLayout {
     public void setTabData(ArrayList<QFTabEntity> tabEntitys) {
         if (tabEntitys == null || tabEntitys.size() == 0) {
             throw new IllegalStateException("TAB data can not be NULL or EMPTY !");
-        } else if (tabEntitys.size()< 2 || tabEntitys.size() > 6) {
+        } else if (tabEntitys.size() < 2 || tabEntitys.size() > 6) {
             throw new IllegalStateException("The number of TAB cannot be less than 2 and cannot exceed 6！");
         }
 
         this.mTabEntitys.clear();
-
-        if (mPublishMode == 2 && tabEntitys.size() % 2 == 0) {
-            QFTabEntity qfTabEntity = new QFTabEntity() {
-                @Override
-                public String getTabTitle() {
-                    return null;
-                }
-
-                @Override
-                public int getTabSelectedIcon() {
-                    return mCenterPublishIcon;
-                }
-
-                @Override
-                public int getTabUnselectedIcon() {
-                    return mCenterPublishIcon;
-                }
-
-                @Override
-                public int getTabCoverIcon() {
-                    return 0;
-                }
-            };
-
-            int index = tabEntitys.size()/2;
-            tabEntitys.add(index, qfTabEntity);
-        }
 
         this.mTabEntitys.addAll(tabEntitys);
 
@@ -194,7 +169,7 @@ public class QFBottomTabLayout extends FrameLayout {
         for (int i = 0; i < mTabCount; i++) {
             tabView = View.inflate(mContext, R.layout.layout_tab_top, null);
             tabView.setTag(i);
-            addTab(i, tabView);
+            addTab(i, tabView, mTabEntitys.get(i));
         }
 
         updateTabStyles();
@@ -202,10 +177,11 @@ public class QFBottomTabLayout extends FrameLayout {
 
     /**
      * 创建并添加tab
+     *
      * @param position
      * @param tabView
      */
-    private void addTab(final int position, View tabView) {
+    private void addTab(final int position, View tabView, final QFTabEntity entity) {
         TextView tv_tab_title = tabView.findViewById(R.id.tv_tab_title);
         if (TextUtils.isEmpty(mTabEntitys.get(position).getTabTitle())) {
             tv_tab_title.setVisibility(GONE);
@@ -232,14 +208,14 @@ public class QFBottomTabLayout extends FrameLayout {
 
                     if (mListener != null) {
                         // 只有在覆图片不显示的情况下才会有双击效果
-                        if (mPublishMode != 1 || publish.getVisibility() != VISIBLE) {
+                        if (publish.getVisibility() != VISIBLE) {
                             mListener.onDoubleClick(position);
                         }
                     }
                 }
 
                 // 点击了发布按钮固定在中间的情况
-                if (mPublishMode == 2 && position == mTabCount/2) {
+                if (entity.getIsPublish()) {
                     if (mListener != null) {
                         mListener.onTabPublish(position);
                     }
@@ -247,7 +223,7 @@ public class QFBottomTabLayout extends FrameLayout {
                 }
 
                 // 点击了覆盖图片的情况
-                if (mPublishMode == 1 && publish.getVisibility() == VISIBLE) {
+                if (publish.getVisibility() == VISIBLE) {
                     if (mListener != null) {
                         mListener.onTabPublish(position);
                     }
@@ -292,7 +268,7 @@ public class QFBottomTabLayout extends FrameLayout {
                 }
 
                 // 设置主题色的情况下优先使用主题色
-                if(mThemeColor != 0) {
+                if (mThemeColor != 0) {
                     mTextSelectColor = mThemeColor;
                 }
 
@@ -315,7 +291,7 @@ public class QFBottomTabLayout extends FrameLayout {
 
             ImageView publish = tabView.findViewById(R.id.publish);
             // 是否现在覆盖图片
-            if (mPublishMode == 1 && i == mCurrentTab && mTabEntitys.get(i).getTabCoverIcon() != 0) {
+            if (i == mCurrentTab && mTabEntitys.get(i).getTabCoverIcon() != 0) {
                 publish.setVisibility(VISIBLE);
                 publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
             } else {
@@ -337,7 +313,7 @@ public class QFBottomTabLayout extends FrameLayout {
                 iv_tab_icon.setLayoutParams(lp);
             } else {
                 // 纯文字显示情况
-                if (mPublishMode == 2 && i == mTabCount/2) {
+                if (mTabEntitys.get(i).getIsPublish()) {
                     iv_tab_icon.setVisibility(View.VISIBLE);
                 } else {
                     iv_tab_icon.setVisibility(View.GONE);
@@ -355,14 +331,14 @@ public class QFBottomTabLayout extends FrameLayout {
             ImageView publish = tabView.findViewById(R.id.publish);
 
 
-            if (mPublishMode == 1 && isSelect && mTabEntitys.get(i).getTabCoverIcon() != 0) {
+            if (isSelect && mTabEntitys.get(i).getTabCoverIcon() != 0) {
                 publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
                 publish.setVisibility(VISIBLE);
             } else {
                 publish.setVisibility(GONE);
             }
             TextView tab_title = tabView.findViewById(R.id.tv_tab_title);
-            if(mThemeColor != 0) {
+            if (mThemeColor != 0) {
                 mTextSelectColor = mThemeColor;
             }
             tab_title.setTextColor(isSelect ? mTextSelectColor : mTextUnselectColor);
@@ -379,6 +355,7 @@ public class QFBottomTabLayout extends FrameLayout {
 
     /**
      * 设置Tab的图片
+     *
      * @param i
      * @param isSelect
      * @param iv_tab_icon
@@ -401,21 +378,14 @@ public class QFBottomTabLayout extends FrameLayout {
     //setter and getter
     public void setCurrentTab(int currentTab) {
         this.mCurrentTab = currentTab;
-        int tempCurrenTab = -1;
+        int tempCurrenTab = mCurrentTab;
         updateTabSelection(currentTab);
         if (mFragmentChangeManager != null) {
-            if (mPublishMode == 2) {
-                // 中间添加按钮的位置
-                int centerAddPosition = mTabEntitys.size() / 2;
-                if (currentTab > centerAddPosition) {
-                    tempCurrenTab = currentTab - 1;
-                } else {
-                    tempCurrenTab = currentTab;
+            for (int i = 0; i < mCurrentTab; i++) {
+                if (mTabEntitys.get(i).getIsPublish()) {
+                    tempCurrenTab--;
                 }
-            } else {
-                tempCurrenTab = currentTab;
             }
-
             if (mFragmentChangeManager.getCurrentFragment(tempCurrenTab).isAdded()) {
                 mFragmentChangeManager.showCurrentFragment(tempCurrenTab);
             } else {
@@ -491,10 +461,6 @@ public class QFBottomTabLayout extends FrameLayout {
         updateTabStyles();
     }
 
-    public void setPublishMode(int publishMode) {
-        this.mPublishMode = publishMode;
-        updateTabStyles();
-    }
 
     public void setTextVisible(boolean textVisible) {
         this.mtextVisible = textVisible;
@@ -673,14 +639,16 @@ public class QFBottomTabLayout extends FrameLayout {
                     bottomPadding = 4;
                 }
             }
-            lp.leftMargin = (int) textWidth/2;
+            lp.leftMargin = (int) textWidth / 2;
             lp.topMargin = mHeight > 0 ? (int) (mHeight - textHeight - iconH - margin) / 2 - dp2px(bottomPadding) : dp2px(bottomPadding);
 
             tipView.setLayoutParams(lp);
         }
     }
 
-    /** 当前类只提供了少许设置未读消息属性的方法,可以通过该方法获取MsgView对象从而各种设置 */
+    /**
+     * 当前类只提供了少许设置未读消息属性的方法,可以通过该方法获取MsgView对象从而各种设置
+     */
     public MsgView getMsgView(int position) {
         if (position >= mTabCount) {
             position = mTabCount - 1;
