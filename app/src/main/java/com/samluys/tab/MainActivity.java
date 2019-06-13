@@ -95,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDoubleClick(int position) {
                 Toast.makeText(MainActivity.this, "双击了" + position, Toast.LENGTH_LONG).show();
             }
+
+            @Override
+            public boolean shouldInterceptJumpFragment(int position) {
+                return false;
+            }
         });
 
         // 自定义导航栏TAB数量 最少2个最多6个
@@ -149,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.e("MainActivity", "双击了");
 
+            }
+
+            @Override
+            public boolean shouldInterceptJumpFragment(int position) {
+                return false;
             }
         });
 

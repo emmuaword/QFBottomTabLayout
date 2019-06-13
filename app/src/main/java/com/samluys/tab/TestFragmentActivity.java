@@ -79,6 +79,11 @@ public class TestFragmentActivity extends AppCompatActivity {
             public void onDoubleClick(int position) {
 
             }
+
+            @Override
+            public boolean shouldInterceptJumpFragment(int position) {
+                return false;
+            }
         });
     }
 }

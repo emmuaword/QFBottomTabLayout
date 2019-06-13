@@ -385,11 +385,13 @@ public class QFBottomTabLayout extends FrameLayout {
         this.mCurrentTab = currentTab;
         updateTabSelection(currentTab);
         if (mFragmentChangeManager != null) {
-            int tempCurrentTab = getFragmentIndex(mCurrentTab);
-            if (mFragmentChangeManager.getCurrentFragment(tempCurrentTab).isAdded()) {
-                mFragmentChangeManager.showCurrentFragment(tempCurrentTab);
-            } else {
-                mFragmentChangeManager.setFragments(tempCurrentTab);
+            if (mListener == null || !mListener.shouldInterceptJumpFragment(mCurrentTab)) {
+                int tempCurrentTab = getFragmentIndex(mCurrentTab);
+                if (mFragmentChangeManager.getCurrentFragment(tempCurrentTab).isAdded()) {
+                    mFragmentChangeManager.showCurrentFragment(tempCurrentTab);
+                } else {
+                    mFragmentChangeManager.setFragments(tempCurrentTab);
+                }
             }
         }
         invalidate();
