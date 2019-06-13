@@ -382,7 +382,7 @@ public class QFBottomTabLayout extends FrameLayout {
 
     //setter and getter
     public void setCurrentTab(int currentTab) {
-        if (mListener == null || !mListener.shouldInterceptJumpFragment(mCurrentTab)) {
+        if (mListener == null || !mListener.shouldInterceptJumpFragment(currentTab)) {
             this.mCurrentTab = currentTab;
             updateTabSelection(currentTab);
             if (mFragmentChangeManager != null) {
