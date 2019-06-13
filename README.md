@@ -49,7 +49,6 @@ dependencies {
 | qf_iconHeight  |图片的高度   |
 |qf_iconMargin| 图片与文字间的间距   |
 | qf_centerPublishIcon  | 设置发布按钮固定在中间的图片  |
-|  qf_publishMode | 设置发布按钮的状态 （COVER：表示覆盖在tab上  CENTER：表示发布按钮固定在中间）|
 |  qf_themeColor | 设置主题色（此时选中的样式为设置的主题色）|
 
 ### Java代码中使用
@@ -76,6 +75,9 @@ protected void onCreate(Bundle savedInstanceState) {
 		 
 		 // 设置带有覆盖图片的数据
 		 // mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i], mCoverImageIds));
+
+		 // 设置单独发布的数据
+		 // mTabEntities.add(new TabEntity("", R.mipmap.publish, R.mipmap.publish, 0,true));
 	}
 // 设置数据
 mTabLayout_1.setTabData(mTabEntities);
