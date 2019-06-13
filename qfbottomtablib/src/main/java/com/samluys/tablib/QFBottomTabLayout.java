@@ -304,11 +304,16 @@ public class QFBottomTabLayout extends FrameLayout {
                 QFTabEntity tabEntity = mTabEntitys.get(i);
                 // 设置Tab的图片 选择和未选择
                 setTabIcon(i, i == mCurrentTab, iv_tab_icon, tabEntity);
-
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        mIconWidth <= 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int) mIconWidth,
-                        mIconHeight <= 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int) mIconHeight);
-                lp.bottomMargin = (int) mIconMargin;
+                LinearLayout.LayoutParams lp;
+                if (mTabEntitys.get(i).getIsPublish()) {
+                    lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                } else {
+                    lp = new LinearLayout.LayoutParams(
+                            mIconWidth <= 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int) mIconWidth,
+                            mIconHeight <= 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int) mIconHeight);
+                    lp.bottomMargin = (int) mIconMargin;
+                }
 
                 iv_tab_icon.setLayoutParams(lp);
             } else {
