@@ -400,6 +400,9 @@ public class QFBottomTabLayout extends FrameLayout {
         invalidate();
     }
 
+    public FragmentChangeManager getFragmentChangeManager() {
+        return mFragmentChangeManager;
+    }
 
     public void setTabPadding(float tabPadding) {
         this.mTabPadding = dp2px(tabPadding);
