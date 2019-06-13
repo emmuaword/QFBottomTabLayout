@@ -154,7 +154,7 @@ public class QFBottomTabLayout extends FrameLayout {
     /**
      * 关联数据支持同时切换fragments
      */
-    public void setTabData(ArrayList<QFTabEntity> tabEntitys, FragmentActivity fa, int containerViewId, ArrayList<Fragment> fragments) {
+    public void setTabData(ArrayList<QFTabEntity> tabEntitys, FragmentActivity fa, int containerViewId, ArrayList<? extends Fragment> fragments) {
         mFragmentChangeManager = new FragmentChangeManager(fa.getSupportFragmentManager(), containerViewId, fragments);
         setTabData(tabEntitys);
     }
