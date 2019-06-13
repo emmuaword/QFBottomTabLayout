@@ -383,21 +383,40 @@ public class QFBottomTabLayout extends FrameLayout {
     //setter and getter
     public void setCurrentTab(int currentTab) {
         this.mCurrentTab = currentTab;
-        int tempCurrenTab = mCurrentTab;
         updateTabSelection(currentTab);
         if (mFragmentChangeManager != null) {
-            for (int i = 0; i < mCurrentTab; i++) {
-                if (mTabEntitys.get(i).getIsPublish()) {
-                    tempCurrenTab--;
-                }
-            }
-            if (mFragmentChangeManager.getCurrentFragment(tempCurrenTab).isAdded()) {
-                mFragmentChangeManager.showCurrentFragment(tempCurrenTab);
+            int tempCurrentTab = getFragmentIndex(mCurrentTab);
+            if (mFragmentChangeManager.getCurrentFragment(tempCurrentTab).isAdded()) {
+                mFragmentChangeManager.showCurrentFragment(tempCurrentTab);
             } else {
-                mFragmentChangeManager.setFragments(tempCurrenTab);
+                mFragmentChangeManager.setFragments(tempCurrentTab);
             }
         }
         invalidate();
+    }
+
+    /**
+     * 根据当前tab获取
+     *
+     * @return
+     */
+    public int getFragmentIndex(int tabIndex) {
+        int tempCurrenTab = tabIndex;
+        for (int i = 0; i < tabIndex; i++) {
+            if (mTabEntitys.get(i).getIsPublish()) {
+                tempCurrenTab--;
+            }
+        }
+        return tempCurrenTab;
+    }
+
+    /**
+     * 根据index获取fragment，要排除发布的tab。
+     *
+     * @return
+     */
+    public Fragment getCurrentFragment() {
+        return mFragmentChangeManager.getCurrentFragment(getFragmentIndex(mCurrentTab));
     }
 
     public FragmentChangeManager getFragmentChangeManager() {
