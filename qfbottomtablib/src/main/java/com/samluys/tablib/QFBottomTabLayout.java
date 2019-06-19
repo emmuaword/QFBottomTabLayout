@@ -296,13 +296,7 @@ public class QFBottomTabLayout extends FrameLayout {
             ImageView iv_tab_icon = tabView.findViewById(R.id.iv_tab_icon);
 
             ImageView publish = tabView.findViewById(R.id.publish);
-            // 是否现在覆盖图片
-            if (i == mCurrentTab && mTabEntitys.get(i).getTabCoverIcon() != 0) {
-                publish.setVisibility(VISIBLE);
-                publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
-            } else {
-                publish.setVisibility(GONE);
-            }
+
 
             // 显示图片
             if (mIconVisible) {
@@ -329,7 +323,16 @@ public class QFBottomTabLayout extends FrameLayout {
                 } else {
                     iv_tab_icon.setVisibility(View.GONE);
                 }
+            }
 
+            // 是否现在覆盖图片
+            if (i == mCurrentTab && mTabEntitys.get(i).getTabCoverIcon() != 0) {
+                publish.setVisibility(VISIBLE);
+                tv_tab_title.setVisibility(GONE);
+                iv_tab_icon.setVisibility(GONE);
+                publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
+            } else {
+                publish.setVisibility(GONE);
             }
         }
     }
