@@ -343,20 +343,27 @@ public class QFBottomTabLayout extends FrameLayout {
             final boolean isSelect = i == position;
 
             ImageView publish = tabView.findViewById(R.id.publish);
+            TextView tab_title = tabView.findViewById(R.id.tv_tab_title);
+            ImageView iv_tab_icon = tabView.findViewById(R.id.iv_tab_icon);
+            MsgView tipView = tabView.findViewById(R.id.rtv_msg_tip);
 
 
             if (isSelect && mTabEntitys.get(i).getTabCoverIcon() != 0) {
                 publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
                 publish.setVisibility(VISIBLE);
+                tab_title.setVisibility(GONE);
+                iv_tab_icon.setVisibility(GONE);
+                tipView.setVisibility(GONE);
             } else {
                 publish.setVisibility(GONE);
+                tab_title.setVisibility(VISIBLE);
+                iv_tab_icon.setVisibility(VISIBLE);
+                tipView.setVisibility(VISIBLE);
             }
-            TextView tab_title = tabView.findViewById(R.id.tv_tab_title);
             if (mThemeColor != 0) {
                 mTextSelectColor = mThemeColor;
             }
             tab_title.setTextColor(isSelect ? mTextSelectColor : mTextUnselectColor);
-            ImageView iv_tab_icon = tabView.findViewById(R.id.iv_tab_icon);
             QFTabEntity tabEntity = mTabEntitys.get(i);
             // 设置Tab的图片 选择和未选择
             setTabIcon(i, isSelect, iv_tab_icon, tabEntity);

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] mTitles = {"首页", "社区", "本地圈", "消息", "发现"};
+    private String[] mTitles = {"首页", "社区xxxx", "本地圈", "消息", "发现"};
     private int[] mIconUnselectIds = {
             R.mipmap.tab1, R.mipmap.tab2,
             R.mipmap.tab3, R.mipmap.tab4, R.mipmap.tab5};
