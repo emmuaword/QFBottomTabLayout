@@ -20,6 +20,8 @@ public interface QFTabEntity {
 
     Drawable getTabUnselectedIconDrawable();
 
+    Drawable getTabCoverIconDrawable();
+
     boolean getIsPublish();
 
     boolean getIsNewPage();

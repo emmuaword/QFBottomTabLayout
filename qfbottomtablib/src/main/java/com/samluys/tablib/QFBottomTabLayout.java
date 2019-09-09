@@ -327,11 +327,11 @@ public class QFBottomTabLayout extends FrameLayout {
             }
 
             // 是否现在覆盖图片
-            if (i == mCurrentTab && mTabEntitys.get(i).getTabCoverIcon() != 0) {
+            if (i == mCurrentTab && getTabCoverIconDrawable(mTabEntitys.get(i)) != null) {
                 publish.setVisibility(VISIBLE);
                 tv_tab_title.setVisibility(GONE);
                 iv_tab_icon.setVisibility(GONE);
-                publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
+                publish.setImageDrawable(getTabCoverIconDrawable(mTabEntitys.get(i)));
             } else {
                 publish.setVisibility(GONE);
                 if (mIconVisible) {
@@ -342,6 +342,17 @@ public class QFBottomTabLayout extends FrameLayout {
                 }
             }
         }
+    }
+
+    private Drawable getTabCoverIconDrawable(QFTabEntity tabEntity) {
+        if (tabEntity != null) {
+            if (tabEntity.getTabCoverIconDrawable() != null) {
+                return tabEntity.getTabCoverIconDrawable();
+            } else if (tabEntity.getTabCoverIcon() != 0) {
+                return ContextCompat.getDrawable(mContext, tabEntity.getTabCoverIcon());
+            }
+        }
+        return null;
     }
 
     private void updateTabSelection(int position) {
@@ -355,8 +366,8 @@ public class QFBottomTabLayout extends FrameLayout {
             QFTabEntity tabEntity = mTabEntitys.get(i);
 
 
-            if (isSelect && mTabEntitys.get(i).getTabCoverIcon() != 0) {
-                publish.setImageResource(mTabEntitys.get(i).getTabCoverIcon());
+            if (isSelect && getTabCoverIconDrawable(mTabEntitys.get(i)) != null) {
+                publish.setImageDrawable(getTabCoverIconDrawable(mTabEntitys.get(i)));
                 publish.setVisibility(VISIBLE);
                 tab_title.setVisibility(GONE);
                 iv_tab_icon.setVisibility(GONE);
