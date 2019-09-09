@@ -1,6 +1,8 @@
 package com.samluys.tab;
 
 
+import android.graphics.drawable.Drawable;
+
 import com.samluys.tablib.QFTabEntity;
 
 public class TabEntity implements QFTabEntity {
@@ -8,6 +10,8 @@ public class TabEntity implements QFTabEntity {
     public int selectedIcon;
     public int unSelectedIcon;
     public int tabCoverIcon;
+    public Drawable selectedIconDrawable;
+    public Drawable unSelectedIconDrawable;
     public boolean isPublish;
     public boolean isNewPage;
 
@@ -15,6 +19,12 @@ public class TabEntity implements QFTabEntity {
         this.title = title;
         this.selectedIcon = selectedIcon;
         this.unSelectedIcon = unSelectedIcon;
+    }
+
+    public TabEntity(String title, Drawable selectedIconDrawable, Drawable unSelectedIconDrawable) {
+        this.title = title;
+        this.selectedIconDrawable = selectedIconDrawable;
+        this.unSelectedIconDrawable = unSelectedIconDrawable;
     }
 
     public TabEntity(String title, int selectedIcon, int unSelectedIcon, int tabCoverIcon) {
@@ -63,6 +73,16 @@ public class TabEntity implements QFTabEntity {
     @Override
     public int getTabCoverIcon() {
         return tabCoverIcon;
+    }
+
+    @Override
+    public Drawable getTabSelectedIconDrawable() {
+        return selectedIconDrawable;
+    }
+
+    @Override
+    public Drawable getTabUnselectedIconDrawable() {
+        return unSelectedIconDrawable;
     }
 
     @Override

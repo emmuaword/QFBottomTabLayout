@@ -190,6 +190,7 @@ public class QFBottomTabLayout extends FrameLayout {
             tv_tab_title.setText(mTabEntitys.get(position).getTabTitle());
         }
         ImageView iv_tab_icon = tabView.findViewById(R.id.iv_tab_icon);
+        iv_tab_icon.setImageDrawable(getTabIconDrawable(mTabEntitys.get(position), false));
         iv_tab_icon.setImageResource(mTabEntitys.get(position).getTabUnselectedIcon());
         FrameLayout rl_tab = tabView.findViewById(R.id.rl_tab);
         rl_tab.setBackgroundColor(mBackgroundColor);
@@ -393,13 +394,37 @@ public class QFBottomTabLayout extends FrameLayout {
         if (mThemeColor != 0) {
             if (i == mCurrentTab) {
                 iv_tab_icon.setImageDrawable(
-                        getTintDrawable(mContext, tabEntity.getTabSelectedIcon(),
+                        getTintDrawable(getTabIconDrawable(tabEntity, true),
                                 mThemeColor));
             } else {
-                iv_tab_icon.setImageResource(tabEntity.getTabUnselectedIcon());
+                iv_tab_icon.setImageDrawable(getTabIconDrawable(tabEntity, false));
             }
         } else {
-            iv_tab_icon.setImageResource(isSelect ? tabEntity.getTabSelectedIcon() : tabEntity.getTabUnselectedIcon());
+            iv_tab_icon.setImageDrawable(getTabIconDrawable(tabEntity, isSelect));
+        }
+    }
+
+    private Drawable getTabIconDrawable(QFTabEntity tabEntity, boolean isSelected) {
+        if (isSelected) {
+            if (tabEntity.getTabSelectedIconDrawable() != null) {
+                return tabEntity.getTabSelectedIconDrawable();
+            } else {
+                if (tabEntity.getTabSelectedIcon() != 0) {
+                    return ContextCompat.getDrawable(mContext, tabEntity.getTabSelectedIcon());
+                } else {
+                    return null;
+                }
+            }
+        } else {
+            if (tabEntity.getTabUnselectedIconDrawable() != null) {
+                return tabEntity.getTabUnselectedIconDrawable();
+            } else {
+                if (tabEntity.getTabUnselectedIcon() != 0) {
+                    return ContextCompat.getDrawable(mContext, tabEntity.getTabUnselectedIcon());
+                } else {
+                    return null;
+                }
+            }
         }
     }
 
@@ -675,7 +700,7 @@ public class QFBottomTabLayout extends FrameLayout {
             float margin = 0;
             if (mIconVisible) {
                 if (iconH <= 0) {
-                    iconH = mContext.getResources().getDrawable(mTabEntitys.get(position).getTabSelectedIcon()).getIntrinsicHeight();
+                    iconH = getTabIconDrawable(mTabEntitys.get(position), true).getIntrinsicHeight();
                 }
                 margin = mIconMargin;
             }
@@ -757,14 +782,4 @@ public class QFBottomTabLayout extends FrameLayout {
         return drawable1;
     }
 
-    public static Drawable getTintDrawable(Context context, int id, int color) {
-        if (id != 0) {
-            Drawable originDrawable = ContextCompat.getDrawable(context, id);
-            if (originDrawable != null) {
-                return getTintDrawable(originDrawable, color);
-            }
-        }
-
-        return null;
-    }
 }

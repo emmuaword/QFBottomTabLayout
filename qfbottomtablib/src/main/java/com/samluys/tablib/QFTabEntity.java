@@ -1,6 +1,7 @@
 package com.samluys.tablib;
 
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 
 public interface QFTabEntity {
@@ -14,6 +15,10 @@ public interface QFTabEntity {
 
     @DrawableRes
     int getTabCoverIcon();
+
+    Drawable getTabSelectedIconDrawable();
+
+    Drawable getTabUnselectedIconDrawable();
 
     boolean getIsPublish();
 
