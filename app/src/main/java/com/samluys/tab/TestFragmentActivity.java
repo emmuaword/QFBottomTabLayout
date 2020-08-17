@@ -1,11 +1,11 @@
 package com.samluys.tab;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.samluys.tab.frgment.FiveFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.samluys.tab.frgment.FourFragment;
 import com.samluys.tab.frgment.OneFragment;
 import com.samluys.tab.frgment.ThreeFragment;
@@ -72,7 +72,7 @@ public class TestFragmentActivity extends AppCompatActivity {
 
             @Override
             public void onTabPublish(int position) {
-                Toast.makeText(TestFragmentActivity.this, "publish-->"+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TestFragmentActivity.this, "publish-->" + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override

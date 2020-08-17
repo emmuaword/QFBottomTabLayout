@@ -1,8 +1,9 @@
 package com.samluys.tablib;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -10,9 +11,13 @@ import java.util.ArrayList;
 public class FragmentChangeManager {
     private FragmentManager mFragmentManager;
     private int mContainerViewId;
-    /** Fragment切换数组 */
+    /**
+     * Fragment切换数组
+     */
     private ArrayList<? extends Fragment> mFragments;
-    /** 当前选中的Tab */
+    /**
+     * 当前选中的Tab
+     */
     private int mCurrentTab;
 
     public FragmentChangeManager(FragmentManager fm, int containerViewId, ArrayList<? extends Fragment> fragments) {
@@ -22,7 +27,9 @@ public class FragmentChangeManager {
         initFragments();
     }
 
-    /** 初始化fragments */
+    /**
+     * 初始化fragments
+     */
     private void initFragments() {
 
         if (mCurrentTab != 0) {
@@ -33,7 +40,9 @@ public class FragmentChangeManager {
         }
     }
 
-    /** 界面切换控制 */
+    /**
+     * 界面切换控制
+     */
     public void setFragments(int index) {
 
         mFragmentManager.beginTransaction()

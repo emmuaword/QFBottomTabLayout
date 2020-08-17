@@ -3,11 +3,11 @@ package com.samluys.tab;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.samluys.tablib.OnTabSelectListener;
 import com.samluys.tablib.QFBottomTabLayout;
