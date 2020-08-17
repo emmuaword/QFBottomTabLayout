@@ -3,7 +3,7 @@ package com.samluys.tablib;
 
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 
@@ -18,7 +18,7 @@ public class UnreadMsgUtils {
         if (msgView == null) {
             return;
         }
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) msgView.getLayoutParams();
+        ViewGroup.LayoutParams lp = msgView.getLayoutParams();
         DisplayMetrics dm = msgView.getResources().getDisplayMetrics();
         msgView.setVisibility(View.VISIBLE);
         if (num > 0) {

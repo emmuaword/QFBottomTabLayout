@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
@@ -200,7 +201,7 @@ public class QFBottomTabLayout extends FrameLayout {
         ImageView iv_tab_icon = tabView.findViewById(R.id.iv_tab_icon);
         iv_tab_icon.setImageDrawable(getTabIconDrawable(mTabEntitys.get(position), false));
         iv_tab_icon.setImageResource(mTabEntitys.get(position).getTabUnselectedIcon());
-        FrameLayout rl_tab = tabView.findViewById(R.id.rl_tab);
+        ConstraintLayout rl_tab = tabView.findViewById(R.id.rl_tab);
         rl_tab.setBackgroundColor(mBackgroundColor);
 
         tabView.setOnClickListener(new OnClickListener() {
@@ -274,7 +275,7 @@ public class QFBottomTabLayout extends FrameLayout {
             tabView.setPadding((int) mTabPadding, 0, (int) mTabPadding, 0);
             TextView tv_tab_title = tabView.findViewById(R.id.tv_tab_title);
 
-            FrameLayout rl_tab = tabView.findViewById(R.id.rl_tab);
+            ConstraintLayout rl_tab = tabView.findViewById(R.id.rl_tab);
             rl_tab.setBackgroundColor(mBackgroundColor);
 
             if (mtextVisible) {
@@ -702,13 +703,14 @@ public class QFBottomTabLayout extends FrameLayout {
             position = mTabCount - 1;
         }
         View tabView = mTabsContainer.getChildAt(position);
-        MsgView tipView = tabView.findViewById(R.id.rtv_msg_tip);
+        final LinearLayout ll_tab = tabView.findViewById(R.id.ll_tap);
+        final MsgView tipView = tabView.findViewById(R.id.rtv_msg_tip);
         if (tipView != null) {
             TextView tv_tab_title = tabView.findViewById(R.id.tv_tab_title);
             mTextPaint.setTextSize(mTextsize);
             float textWidth = mTextPaint.measureText(tv_tab_title.getText().toString());
             float textHeight = mTextPaint.descent() - mTextPaint.ascent();
-            MarginLayoutParams lp = (MarginLayoutParams) tipView.getLayoutParams();
+            final MarginLayoutParams lp = (MarginLayoutParams) tipView.getLayoutParams();
 
             float iconH = mIconHeight;
             float margin = 0;
@@ -733,7 +735,14 @@ public class QFBottomTabLayout extends FrameLayout {
             }
             lp.leftMargin = (int) textWidth / 2;
             lp.topMargin = mHeight > 0 ? (int) (mHeight - textHeight - iconH - margin) / 2 - dp2px(bottomPadding) : dp2px(bottomPadding);
-
+            ll_tab.post(new Runnable() {
+                @Override
+                public void run() {
+                    //这里调整一下，角标从实际内容中间线的一半开始，防止间距太远
+                    lp.leftMargin = ll_tab.getWidth() / 2;
+                    tipView.setLayoutParams(lp);
+                }
+            });
             tipView.setLayoutParams(lp);
         }
     }

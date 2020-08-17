@@ -1,79 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mv="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:background="@android:color/transparent">
+    android:clipToPadding="false">
 
 
     <View
         android:id="@+id/v_divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginTop="12dp"
         android:background="#d8d8d8"
-        android:visibility="gone"
-        android:layout_marginTop="12dp"/>
+        android:visibility="gone" />
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rl_tab"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_marginTop="12.5dp"
-        android:layout_gravity="bottom|center_horizontal">
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="12.5dp">
 
         <LinearLayout
             android:id="@+id/ll_tap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            mv:layout_constraintBottom_toBottomOf="parent"
+            mv:layout_constraintEnd_toEndOf="parent"
+            mv:layout_constraintStart_toStartOf="parent"
+            mv:layout_constraintTop_toTopOf="parent"
+            tools:background="#DCB5B5">
 
             <ImageView
                 android:id="@+id/iv_tab_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:src="@mipmap/icon_cover"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                tools:src="@mipmap/icon_cover" />
 
             <TextView
                 android:id="@+id/tv_tab_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="首页"
+                android:singleLine="true"
                 android:textSize="11sp"
-                android:singleLine="true"/>
+                tools:text="首页" />
         </LinearLayout>
 
         <com.samluys.tablib.MsgView
             android:id="@+id/rtv_msg_tip"
-            xmlns:mv="http://schemas.android.com/apk/res-auto"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="11.5sp"
             android:visibility="gone"
+            mv:layout_constraintStart_toStartOf="@+id/ll_tap"
+            mv:layout_constraintTop_toTopOf="parent"
             mv:mv_backgroundColor="#FD481F"
             mv:mv_isRadiusHalfHeight="true"
             mv:mv_strokeColor="#ffffff"
-            mv:mv_strokeWidth="1dp"/>
+            mv:mv_strokeWidth="1dp"
+            tools:text="99+"
+            tools:visibility="visible" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/icon_cover"
         android:layout_gravity="center_horizontal"
-        android:visibility="gone"/>
+        android:src="@mipmap/icon_cover"
+        android:visibility="gone" />
 
 </FrameLayout>
