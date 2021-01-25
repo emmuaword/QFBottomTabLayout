@@ -178,7 +178,10 @@ public class MainActivity extends AppCompatActivity {
             list4.add(new TabEntity(mTitles[i]));
         }
         mTanLayout_7.setTabData(list4);
-
+        mTanLayout_7.showMsg(3, 9);
+        mTanLayout_7.showMsg(1, 99);
+        mTanLayout_7.showMsg(4, 999);
+        mTanLayout_7.showDot(2);
         int[] mIconUnselectIds = {
                 0, 0,
                 R.mipmap.tab3, 0, 0};

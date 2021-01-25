@@ -738,8 +738,13 @@ public class QFBottomTabLayout extends FrameLayout {
             ll_tab.post(new Runnable() {
                 @Override
                 public void run() {
-                    //这里调整一下，角标从实际内容中间线的一半开始，防止间距太远
-                    lp.leftMargin = ll_tab.getWidth() / 2;
+                    if (mIconVisible) {
+                        //有图片的情况下，角标从实际内容中间线的一半开始，防止间距太远
+                        lp.leftMargin = ll_tab.getWidth() / 2;
+                    } else {
+                        //纯文字时，角标从实际内容中间线的4/5开始
+                        lp.leftMargin = (int) (ll_tab.getWidth() * 0.8);
+                    }
                     tipView.setLayoutParams(lp);
                 }
             });
